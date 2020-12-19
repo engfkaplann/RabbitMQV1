@@ -23,14 +23,23 @@ namespace Producer
                     //AutoDelete: Kuyrukta bulunan bütün mesajlar kuyruktan çıkınca kuyruk silinsin mi silinmesin mi ?
                     channel.QueueDeclare("hard_to_swallow_pills", true, false, false, null);
 
-                    string message = "Your opinion is not a fact";
+                    //Send 10 message
+                    for(int i = 0; i < 10; i++)
+                    {
+                        string message = "Your opinion is not a fact - " + (i+1);
 
-                    var bodyByte = Encoding.UTF8.GetBytes(message);
+                        var bodyByte = Encoding.UTF8.GetBytes(message);
 
-                    channel.BasicPublish("", "hard_to_swallow_pills", null, bodyByte);
+                        var properties = channel.CreateBasicProperties();
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine("Message sent!");
+                        //Mesajın kalıcı olmasını sağladık. QueueDeclare methodundaki durable parametresininde true değerini alması gerekiyor.
+                        properties.Persistent = true;
+
+                        channel.BasicPublish("", "hard_to_swallow_pills", null, bodyByte);
+
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.WriteLine($"Message-{i+1} sent!");
+                    }
                 }
             }
 
