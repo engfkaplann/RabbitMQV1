@@ -14,7 +14,6 @@ namespace Consumer
 
             //Connection string
             factory.Uri = new Uri("amqp://guest:guest@localhost:5672");
-            factory.AutomaticRecoveryEnabled = true;
 
             var connection = factory.CreateConnection();
 
