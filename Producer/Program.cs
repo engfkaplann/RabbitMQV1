@@ -22,8 +22,8 @@ namespace Producer
                 using (var channel = connection.CreateModel())
                 {
                     //Durable:Eğer false ise rabbitmq restart atıldığında kuyruktaki tüm veriler memory haricinde bir yere kayıt edilmediği için kaybedilir.
-                    //Exclusive: Bu kuyrağa bir kanal mı bağlansın yoksa başka kanallarda bağlanabilsin mi ? False ise başka kanallarda bağlanabilir.
-                    //AutoDelete: Kuyrukta bulunan bütün mesajlar kuyruktan çıkınca kuyruk silinsin mi silinmesin mi ?
+                    //Exclusive: Bu kuyrağa bir kanal mı bağlansın yoksa başka kanallarda bağlanabilsin mi ? False ise başka kanallarda bağlanabilir. Yalnızca tek bir bağlantı tarafından kullanılır ve bu bağlantı kapandığında kuyruk silinir
+                    //AutoDelete: En az bir consumer'a sahip olan kuyruk, son consumer abonelikten çıktığında silinir.
                     channel.QueueDeclare("hard_to_swallow_pills", true, false, false, null);
 
                     //Send 100 message
